@@ -3,6 +3,8 @@ package pizza.com.pizza.persistence.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -15,7 +17,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @Entity
-@PrimaryKeyJoinColumn(name="id_usuario")
+@PrimaryKeyJoinColumn(name = "id_usuario")
 public class Cliente extends UsuarioEntity {
 
     @Column(nullable = false)
@@ -25,6 +27,8 @@ public class Cliente extends UsuarioEntity {
     private LocalDateTime fechaNacimiento;
 
     @OneToMany(mappedBy = "idCliente")
+    @JsonIgnore
+
     private List<OrdenEntity> idOrden;
 
 }

@@ -3,7 +3,10 @@ package pizza.com.pizza.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import pizza.com.pizza.core.Response;
+import pizza.com.pizza.persistence.entity.Cliente;
+import pizza.com.pizza.persistence.entity.Operador;
 import pizza.com.pizza.persistence.entity.OrdenEntity;
+import pizza.com.pizza.persistence.entity.UsuarioEntity;
 import pizza.com.pizza.service.OrdenService;
 
 import java.util.List;
@@ -34,7 +37,6 @@ public class OrdenController {
             @RequestBody OrdenEntity ordenEntity) {
 
         try {
-
             OrdenEntity create = this.ordenService
                     .crearOrden(ordenEntity);
             return Response.successResponse("orden creada con exito", create);
@@ -54,6 +56,42 @@ public class OrdenController {
             List<OrdenEntity> geto = this.ordenService
                     .obtenerOrdenes();
             return Response.successResponse("ordene listadas con exito", geto);
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return Response.errorResponse("Error al obtener ordenes", null);
+
+        }
+    }
+
+    @GetMapping("/obtenerOrdenesCliente/{id}")
+    public ResponseEntity<Response<List<OrdenEntity>>> obtenerOrdenesCliente(@PathVariable("id") int id) {
+
+        try {
+
+            Cliente c = new Cliente();
+            c.setId(id);
+            List<OrdenEntity> geto = this.ordenService
+                    .obtenerOrdenUsuario(c);
+            return Response.successResponse("ordene listadas con exito", geto);
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return Response.errorResponse("Error al obtener ordenes", null);
+
+        }
+    }
+
+    @GetMapping("/obtenerOrdenesOperador/{id}")
+    public ResponseEntity<Response<List<OrdenEntity>>> obtenerOrdenesOperador(@PathVariable("id") int id) {
+
+        try {
+
+            Operador c = new Operador();
+            c.setId(id);
+            List<OrdenEntity> geto = this.ordenService
+                    .obtenerOrdenesOperador(c);
+            return Response.successResponse("ordenes listadas con exito", geto);
 
         } catch (Exception e) {
             System.out.println(e);

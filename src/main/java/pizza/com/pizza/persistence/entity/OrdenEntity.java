@@ -53,8 +53,11 @@ public class OrdenEntity {
 
     @ManyToOne()
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
-     @JsonIgnore
     private Cliente idCliente;
+
+    @ManyToOne()
+    @JoinColumn(name = "id_operador", referencedColumnName = "id_usuario")
+    private Operador idOperador;
 
     @ManyToMany
     @JoinTable(name = "orden_pizza", joinColumns = @JoinColumn(name = "id_orden"), inverseJoinColumns = @JoinColumn(name = "id_pizza"))
