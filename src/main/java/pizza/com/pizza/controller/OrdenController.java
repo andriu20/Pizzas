@@ -3,15 +3,19 @@ package pizza.com.pizza.controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import pizza.com.pizza.core.Response;
-import pizza.com.pizza.persistence.entity.IngredientesEntity;
 import pizza.com.pizza.persistence.entity.OrdenEntity;
 import pizza.com.pizza.service.OrdenService;
+
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("api/orden")
@@ -33,7 +37,7 @@ public class OrdenController {
 
             OrdenEntity create = this.ordenService
                     .crearOrden(ordenEntity);
-            return Response.successResponse("ordean cread con exito", create);
+            return Response.successResponse("orden creada con exito", create);
 
         } catch (Exception e) {
             System.out.println(e);
@@ -41,4 +45,41 @@ public class OrdenController {
 
         }
     }
+
+    @GetMapping("/obtenerOrdenes")
+    public ResponseEntity<Response<List<OrdenEntity>>> obtenerOrdenes() {
+
+        try {
+
+            List<OrdenEntity> geto = this.ordenService
+                    .obtenerOrdenes();
+            return Response.successResponse("ordene listadas con exito", geto);
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return Response.errorResponse("Error al obtener ordenes", null);
+
+        }
+    }
+
+    @GetMapping("/obtenerOrden/{id}")
+    public ResponseEntity<Response<OrdenEntity>> obtenerOreden(@PathVariable("id") int id) {
+
+        try {
+
+            Optional<OrdenEntity> geto = this.ordenService
+                    .obtenerOrden(id);
+            if (geto.isPresent()) {
+                return Response.successResponse("ordenes listada con exito", geto.get());
+
+            }
+            return Response.successResponse("No se encontro información con este id", null);
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return Response.errorResponse("Error al obtener ordenes", null);
+
+        }
+    }
+
 }

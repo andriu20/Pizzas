@@ -3,6 +3,8 @@ package pizza.com.pizza.persistence.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -49,19 +51,19 @@ public class PizzaEntity {
     @Column(name = "fecha_Creacion", nullable = false)
     private LocalDateTime fecha;
 
-    
-
     @ManyToOne()
+    @JsonIgnore
+
     private Administrador administrador;
 
     @ManyToOne()
     @JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria")
+    @JsonIgnore
+
     private CategoriaEntity idCategoria;
 
     @ManyToMany
     @JoinTable(name = "pizza_ingrediente", joinColumns = @JoinColumn(name = "pizza_id"), inverseJoinColumns = @JoinColumn(name = "ingrediente_id"))
     private List<IngredientesEntity> ingredientes;
-
-   
 
 }

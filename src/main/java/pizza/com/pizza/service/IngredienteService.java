@@ -1,5 +1,8 @@
 package pizza.com.pizza.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +21,13 @@ public class IngredienteService {
 
     public IngredientesEntity crearIngrediente(IngredientesEntity ingredientesEntity) {
         return this.ingredienteRepository.save(ingredientesEntity);
+    }
+
+    public List<IngredientesEntity> obtenerIngredientes() {
+        return this.ingredienteRepository.findAll();
+    }
+
+    public Optional<IngredientesEntity> obtenerIngrediente(int id) {
+        return this.ingredienteRepository.findById(id);
     }
 }

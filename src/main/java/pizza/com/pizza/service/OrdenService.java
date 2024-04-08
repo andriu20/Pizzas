@@ -1,5 +1,8 @@
 package pizza.com.pizza.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,4 +23,11 @@ public class OrdenService {
         return this.ordenRepository.save(ordenEntity);
     }
 
+    public List<OrdenEntity> obtenerOrdenes() {
+        return this.ordenRepository.findAll();
+    }
+
+    public Optional<OrdenEntity> obtenerOrden(Integer id) {
+        return this.ordenRepository.findById(id);
+    }
 }
